@@ -1,0 +1,30 @@
+name: Test
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  Test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.301
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build solution
+        shell: pwsh
+        run: |
+          dotnet build --configuration Release
+
+      - name: Test solution
+        shell: pwsh
+        run: |
+          dotnet test --configuration Release --no-build
+
+
